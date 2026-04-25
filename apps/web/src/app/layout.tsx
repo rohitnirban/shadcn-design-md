@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   title: "shadcn DESIGN.md | Export any preset",
   description:
     "Chrome extension that exports any shadcn preset on ui.shadcn.com/create as a portable DESIGN.md, raw decoded JSON, or resolved globals.css.",
+  verification: {
+    google: "iEMFXgPc433CS1lqsEYH5KvQv_nzFYFdnsAGcf1j6YE",
+  },
 };
 
 export default function RootLayout({
