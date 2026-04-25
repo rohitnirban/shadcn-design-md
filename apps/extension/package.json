@@ -1,0 +1,21 @@
+{
+  "name": "@repo/extension",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/build.mjs --watch",
+    "build": "node scripts/build.mjs && node scripts/zip.mjs",
+    "lint": "tsc --noEmit -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "clean": "rimraf dist .turbo extension.zip"
+  },
+  "dependencies": {
+    "@repo/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.287",
+    "esbuild": "^0.28.0",
+    "typescript": "^5.9.3"
+  }
+}

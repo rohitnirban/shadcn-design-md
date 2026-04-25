@@ -1,0 +1,34 @@
+# deps
+node_modules/
+.pnpm-store/
+
+# build
+dist/
+build/
+out/
+.next/
+.turbo/
+*.tsbuildinfo
+
+# extension dist
+apps/extension/dist/
+apps/extension/*.zip
+
+# env
+.env
+.env.local
+.env.*.local
+
+# editor / OS / agent state
+.vscode/
+.idea/
+.cursor/
+.claude/
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*

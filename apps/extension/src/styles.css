@@ -1,0 +1,420 @@
+/* ==========================================================================
+   shadcn DESIGN.md export. Sidebar button + modal dialog.
+   Token palette mirrors shadcn /create page (OKLCH, neutral).
+   ========================================================================== */
+
+#shadcn-design-md-button {
+  cursor: pointer;
+}
+
+/* ----- Backdrop ---------------------------------------------------------- */
+
+.shadcn-dmd-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  background: oklch(0 0 0 / 50%);
+  backdrop-filter: blur(2px);
+  animation: shadcn-dmd-fade-in 120ms ease-out;
+}
+
+/* ----- Dialog shell ------------------------------------------------------ */
+
+.shadcn-dmd-dialog {
+  position: fixed;
+  z-index: 2147483647;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(900px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+  background: oklch(1 0 0);
+  color: oklch(0.145 0 0);
+  border: 1px solid oklch(0.922 0 0);
+  border-radius: 14px;
+  box-shadow:
+    0 20px 60px -10px rgba(0, 0, 0, 0.25),
+    0 8px 20px -8px rgba(0, 0, 0, 0.15);
+  font: 14px/1.5 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  animation: shadcn-dmd-pop-in 140ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  overflow: hidden;
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-dialog {
+    background: oklch(0.145 0 0);
+    color: oklch(0.985 0 0);
+    border-color: oklch(1 0 0 / 10%);
+  }
+}
+
+/* ----- Header ------------------------------------------------------------ */
+
+.shadcn-dmd-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 20px 12px;
+  border-bottom: 1px solid oklch(0.922 0 0);
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-header {
+    border-bottom-color: oklch(1 0 0 / 10%);
+  }
+}
+
+.shadcn-dmd-title-wrap {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.shadcn-dmd-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.shadcn-dmd-subtitle {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: oklch(0.556 0 0);
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-subtitle {
+    color: oklch(0.708 0 0);
+  }
+}
+
+.shadcn-dmd-close {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  font-size: 22px;
+  line-height: 1;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 120ms, background 120ms;
+}
+
+.shadcn-dmd-close:hover {
+  opacity: 1;
+  background: oklch(0.97 0 0);
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-close:hover {
+    background: oklch(0.269 0 0);
+  }
+}
+
+/* ----- Tabs -------------------------------------------------------------- */
+
+.shadcn-dmd-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 10px 20px 0;
+  border-bottom: 1px solid oklch(0.922 0 0);
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-tabs {
+    border-bottom-color: oklch(1 0 0 / 10%);
+  }
+}
+
+.shadcn-dmd-tab {
+  position: relative;
+  background: transparent;
+  border: 0;
+  padding: 8px 12px 10px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: oklch(0.556 0 0);
+  cursor: pointer;
+  border-radius: 6px 6px 0 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-tab {
+    color: oklch(0.708 0 0);
+  }
+}
+
+.shadcn-dmd-tab:hover {
+  color: oklch(0.145 0 0);
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-tab:hover {
+    color: oklch(0.985 0 0);
+  }
+}
+
+.shadcn-dmd-tab.is-active {
+  color: oklch(0.145 0 0);
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-tab.is-active {
+    color: oklch(0.985 0 0);
+  }
+}
+
+.shadcn-dmd-tab.is-active::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: -1px;
+  height: 2px;
+  background: oklch(0.205 0 0);
+  border-radius: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-tab.is-active::after {
+    background: oklch(0.985 0 0);
+  }
+}
+
+/* ----- Meta chip strip --------------------------------------------------- */
+
+.shadcn-dmd-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px 20px 4px;
+}
+
+.shadcn-dmd-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  font-size: 11.5px;
+  background: oklch(0.97 0 0);
+  border: 1px solid oklch(0.922 0 0);
+  border-radius: 999px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-chip {
+    background: oklch(0.269 0 0);
+    border-color: oklch(1 0 0 / 10%);
+  }
+}
+
+.shadcn-dmd-chip-key {
+  color: oklch(0.556 0 0);
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-chip-key {
+    color: oklch(0.708 0 0);
+  }
+}
+
+.shadcn-dmd-chip-val {
+  font-family: ui-monospace, "Geist Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* ----- Body / code preview ---------------------------------------------- */
+
+.shadcn-dmd-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 8px 20px 16px;
+  overflow: hidden;
+  display: flex;
+}
+
+.shadcn-dmd-code {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 14px 16px;
+  background: oklch(0.985 0 0);
+  border: 1px solid oklch(0.922 0 0);
+  border-radius: 10px;
+  font-family: ui-monospace, "Geist Mono", "JetBrains Mono", Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.55;
+  color: oklch(0.205 0 0);
+  overflow: auto;
+  white-space: pre;
+  tab-size: 2;
+  max-height: 50vh;
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-code {
+    background: oklch(0.205 0 0);
+    border-color: oklch(1 0 0 / 10%);
+    color: oklch(0.922 0 0);
+  }
+}
+
+.shadcn-dmd-code code {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  padding: 0;
+}
+
+/* ----- Footer ------------------------------------------------------------ */
+
+.shadcn-dmd-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px 16px;
+  border-top: 1px solid oklch(0.922 0 0);
+  background: oklch(0.985 0 0);
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-footer {
+    border-top-color: oklch(1 0 0 / 10%);
+    background: oklch(0.205 0 0);
+  }
+}
+
+.shadcn-dmd-status {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 12px;
+  color: oklch(0.556 0 0);
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-status {
+    color: oklch(0.708 0 0);
+  }
+}
+
+.shadcn-dmd-actions {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.shadcn-dmd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  padding: 0 14px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  background: oklch(1 0 0);
+  color: oklch(0.145 0 0);
+  border: 1px solid oklch(0.922 0 0);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 120ms, border-color 120ms, opacity 120ms;
+}
+
+.shadcn-dmd-btn:hover:not(:disabled) {
+  background: oklch(0.97 0 0);
+}
+
+.shadcn-dmd-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-btn {
+    background: oklch(0.269 0 0);
+    color: oklch(0.985 0 0);
+    border-color: oklch(1 0 0 / 10%);
+  }
+
+  .shadcn-dmd-btn:hover:not(:disabled) {
+    background: oklch(0.32 0 0);
+  }
+}
+
+.shadcn-dmd-btn-primary {
+  background: oklch(0.205 0 0);
+  color: oklch(0.985 0 0);
+  border-color: oklch(0.205 0 0);
+}
+
+.shadcn-dmd-btn-primary:hover:not(:disabled) {
+  background: oklch(0.145 0 0);
+  border-color: oklch(0.145 0 0);
+}
+
+@media (prefers-color-scheme: dark) {
+  .shadcn-dmd-btn-primary {
+    background: oklch(0.985 0 0);
+    color: oklch(0.205 0 0);
+    border-color: oklch(0.985 0 0);
+  }
+
+  .shadcn-dmd-btn-primary:hover:not(:disabled) {
+    background: oklch(0.922 0 0);
+    border-color: oklch(0.922 0 0);
+  }
+}
+
+/* ----- Animations -------------------------------------------------------- */
+
+@keyframes shadcn-dmd-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shadcn-dmd-pop-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* ----- Responsive -------------------------------------------------------- */
+
+@media (max-width: 600px) {
+  .shadcn-dmd-dialog {
+    width: calc(100vw - 16px);
+    max-height: calc(100vh - 24px);
+  }
+  .shadcn-dmd-header,
+  .shadcn-dmd-tabs,
+  .shadcn-dmd-meta,
+  .shadcn-dmd-body,
+  .shadcn-dmd-footer {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .shadcn-dmd-code {
+    font-size: 11.5px;
+    max-height: 45vh;
+  }
+}
