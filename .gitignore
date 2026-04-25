@@ -10,9 +10,10 @@ out/
 .turbo/
 *.tsbuildinfo
 
-# extension dist
+# extension dist + built zips
 apps/extension/dist/
 apps/extension/*.zip
+shadcn-design-md-*.zip
 
 # env
 .env

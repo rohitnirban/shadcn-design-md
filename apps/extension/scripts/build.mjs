@@ -1,5 +1,5 @@
 import { build, context } from "esbuild";
-import { cp, mkdir, rm, readFile, writeFile } from "node:fs/promises";
+import { cp, mkdir, readdir, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -14,7 +14,12 @@ async function copyAssets() {
   await cp(resolve(root, "manifest.json"), resolve(dist, "manifest.json"));
   await cp(resolve(root, "src/styles.css"), resolve(dist, "styles.css"));
   if (existsSync(resolve(root, "icons"))) {
-    await cp(resolve(root, "icons"), resolve(dist, "icons"), { recursive: true });
+    // Only copy PNG icons referenced by manifest. Source SVG stays out of the
+    // shipped artifact so Chrome Web Store doesn't get confused by stray files.
+    await cp(resolve(root, "icons"), resolve(dist, "icons"), {
+      recursive: true,
+      filter: (src) => !src.toLowerCase().endsWith(".svg"),
+    });
   }
 }
 

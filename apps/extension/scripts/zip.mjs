@@ -1,5 +1,5 @@
 import { createWriteStream } from "node:fs";
-import { readdir, stat, readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { deflateRawSync } from "node:zlib";
@@ -7,6 +7,13 @@ import { deflateRawSync } from "node:zlib";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
 const dist = resolve(root, "dist");
+
+const manifest = JSON.parse(
+  await readFile(resolve(dist, "manifest.json"), "utf8")
+);
+const versionedName = `shadcn-design-md-${manifest.version}.zip`;
+// Versioned name primary; also keep generic extension.zip for local convenience.
+const outVersioned = resolve(root, versionedName);
 const out = resolve(root, "extension.zip");
 
 // Minimal ZIP writer (store + deflate, no external deps).
@@ -128,4 +135,29 @@ ws.write(eocd);
 ws.end();
 
 await new Promise((res) => ws.on("close", res));
+
+// Sanity check: manifest.json must be at the root of the zip, no nested dir.
+const rootEntries = files.map((f) => f.name);
+if (!rootEntries.includes("manifest.json")) {
+  throw new Error(
+    `[extension] zip layout invalid. manifest.json missing from root. entries:\n  ${rootEntries.join("\n  ")}`
+  );
+}
+const nested = rootEntries.filter((n) => n.startsWith("extension/") || n.startsWith("dist/"));
+if (nested.length > 0) {
+  throw new Error(
+    `[extension] zip has nested top-level dir. entries:\n  ${nested.join("\n  ")}`
+  );
+}
+
+// Mirror to versioned filename for clarity at upload time.
+await readFile(out).then((buf) =>
+  import("node:fs/promises").then((fs) => fs.writeFile(outVersioned, buf))
+);
+
 console.log("[extension] zipped ->", out);
+console.log("[extension] zipped ->", outVersioned);
+console.log("[extension] zip layout OK (manifest.json at root, " + rootEntries.length + " entries)");
+console.log("");
+console.log("Upload either file to chrome://extensions or Chrome Web Store.");
+console.log("Do NOT re-zip the dist/ folder yourself - that wraps it in an extra dir.");
