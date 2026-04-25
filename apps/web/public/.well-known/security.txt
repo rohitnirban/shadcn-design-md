@@ -1,0 +1,5 @@
+Contact: https://github.com/rohitnirban/shadcn-design-md/security/advisories/new
+Expires: 2027-04-25T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://github.com/rohitnirban/shadcn-design-md/blob/main/SECURITY.md
+Policy: https://github.com/rohitnirban/shadcn-design-md/blob/main/SECURITY.md

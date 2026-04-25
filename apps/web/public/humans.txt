@@ -1,0 +1,16 @@
+/* TEAM */
+Maintainer: Rohit Yadav
+GitHub: https://github.com/rohitnirban
+Project: https://github.com/rohitnirban/shadcn-design-md
+
+/* THANKS */
+shadcn-ui contributors - for the preset model and theme registry
+Vercel - Next.js, Turbopack
+Tailwind Labs - Tailwind CSS v4
+Radix - primitives behind shadcn/ui
+
+/* SITE */
+Last update: 2026-04-25
+Standards: HTML5, CSS3, ES2022
+Components: Next.js 16, React 19, Tailwind v4, shadcn/ui
+Software: pnpm, Turborepo, esbuild

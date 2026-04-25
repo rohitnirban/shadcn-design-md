@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ThemeProvider } from "@/context/theme-provider";
+import { SITE_URL } from "@/lib/site-url";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,9 +17,54 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "shadcn DESIGN.md | Export any preset",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "shadcn DESIGN.md | Export any preset",
+    template: "%s",
+  },
   description:
     "Chrome extension that exports any shadcn preset on ui.shadcn.com/create as a portable DESIGN.md, raw decoded JSON, or resolved globals.css.",
+  applicationName: "shadcn DESIGN.md",
+  authors: [{ name: "Rohit Yadav", url: "https://github.com/rohitnirban" }],
+  creator: "Rohit Yadav",
+  keywords: [
+    "shadcn",
+    "shadcn/ui",
+    "design.md",
+    "DESIGN.md",
+    "Chrome extension",
+    "design tokens",
+    "OKLCH",
+    "Tailwind CSS",
+    "theme export",
+    "AI coding agents",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: "shadcn DESIGN.md",
+    title: "shadcn DESIGN.md | Export any preset",
+    description:
+      "Export any shadcn preset as DESIGN.md, raw JSON, or globals.css. Matches shadcn apply byte-for-byte.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "shadcn DESIGN.md | Export any preset",
+    description:
+      "Export any shadcn preset as DESIGN.md, raw JSON, or globals.css.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
   verification: {
     google: "iEMFXgPc433CS1lqsEYH5KvQv_nzFYFdnsAGcf1j6YE",
   },

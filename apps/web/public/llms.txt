@@ -1,0 +1,31 @@
+# shadcn DESIGN.md
+
+> Chrome extension that exports any shadcn preset on ui.shadcn.com/create as a portable design specification for AI coding agents. Three formats: human-readable DESIGN.md (rules + agent guidance), raw decoded JSON (full preset config + resolved CSS vars), and globals.css (`:root` + `.dark` + `@theme inline` blocks). Output is byte-equivalent to `pnpm dlx shadcn@latest apply <code>`.
+
+The extension decodes the preset code locally using the same base62 bitpack algorithm shipped in the shadcn CLI, then resolves OKLCH values from the live theme registry on ui.shadcn.com. Zero permissions, zero telemetry, MIT licensed.
+
+## Project
+
+- [Repository](https://github.com/rohitnirban/shadcn-design-md): Monorepo (apps/web Next.js landing, apps/extension MV3 Chrome extension, packages/shared types + formatters).
+- [License](https://github.com/rohitnirban/shadcn-design-md/blob/main/LICENSE): MIT.
+- [Contributing](https://github.com/rohitnirban/shadcn-design-md/blob/main/CONTRIBUTING.md): Build, dev, release flow.
+- [Security](https://github.com/rohitnirban/shadcn-design-md/blob/main/SECURITY.md): Threat model, disclosure timeline.
+- [Code of Conduct](https://github.com/rohitnirban/shadcn-design-md/blob/main/CODE_OF_CONDUCT.md): Contributor Covenant 2.1.
+
+## Pages
+
+- [Landing](/): Hero, How it works, Use cases, Why this exists, Privacy, FAQ, Install CTA.
+- [Privacy](/privacy): No telemetry, no analytics, no account.
+- [Terms](/terms): MIT-aligned, no warranties, free use.
+- [Security](/security): Threat model and vulnerability reporting.
+
+## Extension architecture
+
+- `apps/extension/src/extractor.ts`: Direct port of the shadcn CLI `decodePreset` (base62 bitpack) plus the official `y(e)` resolver pipeline (baseColor merge, theme overlay, chartColor overlay, menuAccent bold swap, radius override).
+- `apps/extension/src/themeLoader.ts`: Runtime fetch of the public theme registry chunk on ui.shadcn.com. CSP-safe hand-written JS literal parser. No `eval`, no `new Function`. Falls back to a bundled snapshot.
+- `apps/extension/src/content.ts`: Native DOM dialog with three tabs (DESIGN.md, Raw decoded, Export CSS). Copy and Download buttons.
+- `packages/shared/src/formatter.ts`: `formatDesignMd`, `formatRawPreset`, `formatGlobalsCss`. Both apps consume from the same source.
+
+## Optional
+
+- [Releases](https://github.com/rohitnirban/shadcn-design-md/releases): Tag-triggered GitHub Actions release. Each release ships `shadcn-design-md-<version>.zip` and a SHA-256 sidecar.
