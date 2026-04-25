@@ -20,7 +20,7 @@ const items = [
   { title: "FAQ", href: "#faq" },
   {
     title: "GitHub",
-    href: "https://github.com/yourname/shadcn-design-md",
+    href: "https://github.com/rohitnirban/shadcn-design-md",
   },
 ];
 

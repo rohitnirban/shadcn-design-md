@@ -14,7 +14,7 @@ export const Footer = () => {
         </p>
         <Button
           as={Link}
-          href="https://github.com/yourname/shadcn-design-md/releases/latest"
+          href="https://github.com/rohitnirban/shadcn-design-md/releases/latest"
         >
           Download extension
         </Button>

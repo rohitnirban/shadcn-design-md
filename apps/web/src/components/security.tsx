@@ -29,7 +29,7 @@ export const Security = () => {
           <Button
             className="mt-4 mb-8 inline-block w-full md:w-auto"
             as={Link}
-            href="https://github.com/yourname/shadcn-design-md"
+            href="https://github.com/rohitnirban/shadcn-design-md"
           >
             Audit the source
           </Button>

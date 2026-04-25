@@ -42,7 +42,7 @@ export const CTA = () => {
       <div className="relative z-20 mt-6 flex flex-col items-center gap-3 sm:flex-row">
         <Button
           as={Link}
-          href="https://github.com/yourname/shadcn-design-md"
+          href="https://github.com/rohitnirban/shadcn-design-md"
         >
           Get the extension
         </Button>
