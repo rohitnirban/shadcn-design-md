@@ -1,0 +1,75 @@
+name: Release extension
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build + publish release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build extension
+        run: pnpm --filter @repo/extension build
+
+      - name: Resolve version + asset name
+        id: meta
+        shell: bash
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          VERSION="${TAG#v}"
+          ASSET="shadcn-design-md-${VERSION}.zip"
+          cp apps/extension/extension.zip "$ASSET"
+          sha256sum "$ASSET" > "${ASSET}.sha256"
+          {
+            echo "tag=$TAG"
+            echo "version=$VERSION"
+            echo "asset=$ASSET"
+            echo "checksum=${ASSET}.sha256"
+          } >> "$GITHUB_OUTPUT"
+
+          # Mark prerelease if tag has -alpha / -beta / -rc suffix
+          if [[ "$TAG" =~ -(alpha|beta|rc) ]]; then
+            echo "prerelease=--prerelease" >> "$GITHUB_OUTPUT"
+          else
+            echo "prerelease=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Verify manifest version matches tag
+        shell: bash
+        run: |
+          MANIFEST_VERSION=$(node -p "require('./apps/extension/manifest.json').version")
+          if [[ "$MANIFEST_VERSION" != "${{ steps.meta.outputs.version }}" ]]; then
+            echo "::error::manifest.json version ($MANIFEST_VERSION) does not match tag (${{ steps.meta.outputs.version }})."
+            exit 1
+          fi
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.meta.outputs.tag }}" \
+            "${{ steps.meta.outputs.asset }}" \
+            "${{ steps.meta.outputs.checksum }}" \
+            --title "${{ steps.meta.outputs.tag }}" \
+            --generate-notes \
+            ${{ steps.meta.outputs.prerelease }}

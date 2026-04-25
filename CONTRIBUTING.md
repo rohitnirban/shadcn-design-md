@@ -72,6 +72,31 @@ feat(formatter): add formatGlobalsCss with @theme inline block
 - For extension changes: load unpacked, visit a preset URL, verify the dialog opens and exports match `pnpm dlx shadcn@latest apply <code>`
 - For web changes: `pnpm --filter @repo/web dev`, verify the section in browser
 
+## Releasing (maintainers)
+
+```bash
+pnpm release patch        # 0.1.0 -> 0.1.1
+pnpm release minor        # 0.1.0 -> 0.2.0
+pnpm release major        # 0.1.0 -> 1.0.0
+pnpm release 0.3.0-beta.1 # explicit
+```
+
+That bumps `apps/extension/{manifest,package}.json`, commits `chore(release): v<version>`, and tags `v<version>` locally. Push the tag to trigger the GitHub Release workflow:
+
+```bash
+git push origin main --tags
+```
+
+The workflow (`.github/workflows/release.yml`):
+
+- Builds the extension on Node 22
+- Verifies `manifest.json` version matches the tag
+- Renames the zip to `shadcn-design-md-<version>.zip`
+- Generates a SHA-256 checksum file
+- Creates a GitHub release with auto-generated notes
+- Attaches the zip + checksum
+- Tags ending in `-alpha`, `-beta`, or `-rc` are marked **prerelease**
+
 ## Code of Conduct
 
 By contributing, you agree to follow [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md).
