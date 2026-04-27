@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "./button";
 import { Container } from "./container";
 import { Logo } from "./logo";
+import { INSTALL_URL } from "@/lib/site-url";
 
 const legalLinks = [
   { title: "Privacy", href: "/privacy" },
@@ -41,7 +42,9 @@ export const Footer = () => {
 
         <Button
           as={Link}
-          href="https://github.com/rohitnirban/shadcn-design-md/releases/latest"
+          href={INSTALL_URL}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           Download extension
         </Button>

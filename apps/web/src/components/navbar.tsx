@@ -13,6 +13,7 @@ import {
   useTransform,
 } from "motion/react";
 import { ModeToggle } from "./mode-toggle";
+import { INSTALL_URL } from "@/lib/site-url";
 
 const items = [
   { title: "How it works", href: "#how-it-works" },
@@ -93,7 +94,9 @@ const MobileNav = ({ items }: { items: { title: string; href: string }[] }) => {
                 <Button
                   onClick={() => setIsOpen(false)}
                   as={Link}
-                  href="#install"
+                  href={INSTALL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full"
                 >
                   Add to Chrome
@@ -128,7 +131,7 @@ const DesktopNav = ({
       </div>
       <div className="flex items-center gap-2">
         <ModeToggle />
-        <Button as={Link} href="#install">
+        <Button as={Link} href={INSTALL_URL} target="_blank" rel="noopener noreferrer">
           Add to Chrome
         </Button>
       </div>
@@ -169,7 +172,7 @@ const FloatingNav = ({
       </div>
       <div className="flex items-center gap-2">
         <ModeToggle />
-        <Button as={Link} href="#install">
+        <Button as={Link} href={INSTALL_URL} target="_blank" rel="noopener noreferrer">
           Add to Chrome
         </Button>
       </div>

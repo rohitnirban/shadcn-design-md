@@ -27,6 +27,6 @@ export const faqs = [
   {
     question: "How do I install it?",
     answer:
-      "Build with pnpm install && pnpm --filter @repo/extension build, then load apps/extension/dist as an unpacked extension at chrome://extensions with Developer mode on. A signed Chrome Web Store release is in the works.",
+      "Download the latest shadcn-design-md-<version>.zip from github.com/rohitnirban/shadcn-design-md/releases/latest, unzip it, then load the unzipped folder at chrome://extensions with Developer mode on (Load unpacked). A signed Chrome Web Store release is pending review.",
   },
 ];
