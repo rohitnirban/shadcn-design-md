@@ -29,8 +29,16 @@ jobs:
       - run: pnpm build
 
       - name: Verify extension zip layout
+        shell: bash
         run: |
           ZIP=$(ls apps/extension/shadcn-design-md-*.zip | head -1)
           echo "Inspecting $ZIP"
           unzip -l "$ZIP"
-          unzip -l "$ZIP" | grep -E "^\s+\d+.*manifest\.json$" | grep -v "/manifest.json"
+          if ! unzip -l "$ZIP" | awk '{print $NF}' | grep -qx "manifest.json"; then
+            echo "::error::manifest.json not at zip root in $ZIP"
+            exit 1
+          fi
+          if unzip -l "$ZIP" | awk '{print $NF}' | grep -qE "^(extension|dist|shadcn-design-md)/"; then
+            echo "::error::zip has nested top-level dir"
+            exit 1
+          fi
