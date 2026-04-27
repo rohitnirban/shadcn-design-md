@@ -81,17 +81,21 @@ pnpm release major        # 0.1.0 -> 1.0.0
 pnpm release 0.3.0-beta.1 # explicit
 ```
 
-That bumps `apps/extension/{manifest,package}.json`, commits `chore(release): v<version>`, and tags `v<version>` locally. Then build the extension and create the GitHub release manually:
+That bumps `apps/extension/{manifest,package}.json`, commits `chore(release): v<version>`, and tags `v<version>` locally. Push the tag to trigger the release workflow:
 
 ```bash
 git push origin main --tags
-pnpm --filter @repo/extension build
-gh release create v<version> \
-  apps/extension/shadcn-design-md-<version>.zip \
-  --title v<version> --generate-notes
 ```
 
-The local build emits `shadcn-design-md-<version>.zip` with `manifest.json` at the zip root (no nested folder). Upload that file to the Chrome Web Store as-is.
+The workflow (`.github/workflows/release.yml`):
+
+- Builds the extension on Node 22
+- Verifies `manifest.json` version matches the tag
+- Asserts `manifest.json` is at the zip root (no nested directory)
+- Emits the asset as `<repo-name>-<version>.zip` (e.g. `shadcn-design-md-0.2.0.zip`)
+- Generates a SHA-256 checksum sidecar
+- Creates a GitHub release with auto-generated notes and attaches both files
+- Tags ending in `-alpha`, `-beta`, or `-rc` are marked **prerelease**
 
 ## Code of Conduct
 
