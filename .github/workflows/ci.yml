@@ -42,3 +42,12 @@ jobs:
             echo "::error::zip has nested top-level dir"
             exit 1
           fi
+
+      - name: Upload extension zip
+        if: matrix.node == 22
+        uses: actions/upload-artifact@v4
+        with:
+          name: shadcn-design-md-extension
+          path: apps/extension/shadcn-design-md-*.zip
+          if-no-files-found: error
+          retention-days: 14
