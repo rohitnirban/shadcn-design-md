@@ -526,12 +526,22 @@ color variables.
 - Don't mix rounded and sharp corners in the same view.
 - Don't use more than two font weights on one screen.
 
+## Resolved globals.css
+
+The exact \`:root\`, \`.dark\`, and \`@theme inline\` blocks that
+\`pnpm dlx shadcn@latest apply ${code}\` writes into \`globals.css\`.
+Same payload as the **Export CSS** tab. Paste into the project's global
+stylesheet when the apply command cannot be run.
+
+\`\`\`css
+${formatGlobalsCss(data).trimEnd()}
+\`\`\`
+
 ## Raw decoded preset
 
-Full \`decodePreset(${code})\` output plus the resolved OKLCH variables that
-\`pnpm dlx shadcn@latest apply ${code}\` would write into \`globals.css\`.
+Full \`decodePreset(${code})\` output plus the resolved OKLCH variables.
 Same payload as the **Raw decoded** tab. Useful as a single-file handoff
-when you cannot run the apply command in the target environment.
+when the target environment cannot run the apply command.
 
 \`\`\`json
 ${formatRawPreset(data)}
