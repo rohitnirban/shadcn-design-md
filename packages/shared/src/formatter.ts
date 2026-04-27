@@ -542,6 +542,12 @@ ${formatGlobalsCss(data).trimEnd()}
 Full \`decodePreset(${code})\` output plus the resolved OKLCH variables.
 Same payload as the **Raw decoded** tab. Useful as a single-file handoff
 when the target environment cannot run the apply command.
+## Raw decoded preset
+
+Full \`decodePreset(${code})\` output plus the resolved OKLCH variables that
+\`pnpm dlx shadcn@latest apply ${code}\` would write into \`globals.css\`.
+Same payload as the **Raw decoded** tab. Useful as a single-file handoff
+when you cannot run the apply command in the target environment.
 
 \`\`\`json
 ${formatRawPreset(data)}
