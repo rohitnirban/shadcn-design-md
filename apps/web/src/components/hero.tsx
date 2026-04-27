@@ -8,6 +8,7 @@ import { motion } from "motion/react";
 import { Button } from "./button";
 import { Badge } from "./badge";
 import Link from "next/link";
+import { INSTALL_URL } from "@/lib/site-url";
 
 export const Hero = () => {
   return (
@@ -25,7 +26,7 @@ export const Hero = () => {
       </SubHeading>
 
       <div className="mt-6 flex items-center gap-4">
-        <Button as={Link} href="#install">
+        <Button as={Link} href={INSTALL_URL} target="_blank" rel="noopener noreferrer">
           Install extension
         </Button>
         <Button

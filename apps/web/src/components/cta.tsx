@@ -18,6 +18,7 @@ import { Container } from "./container";
 import { SectionHeading } from "./seciton-heading";
 import { Button } from "./button";
 import Link from "next/link";
+import { INSTALL_URL } from "@/lib/site-url";
 
 type SvgComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
@@ -42,7 +43,9 @@ export const CTA = () => {
       <div className="relative z-20 mt-6 flex flex-col items-center gap-3 sm:flex-row">
         <Button
           as={Link}
-          href="https://github.com/rohitnirban/shadcn-design-md"
+          href={INSTALL_URL}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           Get the extension
         </Button>
