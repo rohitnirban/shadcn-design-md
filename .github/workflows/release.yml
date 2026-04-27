@@ -35,9 +35,19 @@ jobs:
         run: |
           TAG="${GITHUB_REF_NAME}"
           VERSION="${TAG#v}"
-          ASSET="shadcn-design-md-${VERSION}.zip"
-          cp apps/extension/extension.zip "$ASSET"
+          REPO_NAME="${GITHUB_REPOSITORY##*/}"
+          ASSET="${REPO_NAME}-${VERSION}.zip"
+
+          # Local build emits shadcn-design-md-<version>.zip; copy under repo-name asset.
+          SRC="apps/extension/${REPO_NAME}-${VERSION}.zip"
+          if [[ ! -f "$SRC" ]]; then
+            echo "::error::expected build artifact $SRC not found"
+            ls -la apps/extension/
+            exit 1
+          fi
+          cp "$SRC" "$ASSET"
           sha256sum "$ASSET" > "${ASSET}.sha256"
+
           {
             echo "tag=$TAG"
             echo "version=$VERSION"
@@ -45,7 +55,6 @@ jobs:
             echo "checksum=${ASSET}.sha256"
           } >> "$GITHUB_OUTPUT"
 
-          # Mark prerelease if tag has -alpha / -beta / -rc suffix
           if [[ "$TAG" =~ -(alpha|beta|rc) ]]; then
             echo "prerelease=--prerelease" >> "$GITHUB_OUTPUT"
           else
@@ -58,6 +67,15 @@ jobs:
           MANIFEST_VERSION=$(node -p "require('./apps/extension/manifest.json').version")
           if [[ "$MANIFEST_VERSION" != "${{ steps.meta.outputs.version }}" ]]; then
             echo "::error::manifest.json version ($MANIFEST_VERSION) does not match tag (${{ steps.meta.outputs.version }})."
+            exit 1
+          fi
+
+      - name: Verify zip layout (manifest at root, no nested dir)
+        shell: bash
+        run: |
+          unzip -l "${{ steps.meta.outputs.asset }}"
+          if ! unzip -l "${{ steps.meta.outputs.asset }}" | awk '{print $NF}' | grep -qx "manifest.json"; then
+            echo "::error::manifest.json not at zip root in ${{ steps.meta.outputs.asset }}"
             exit 1
           fi
 

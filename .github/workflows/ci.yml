@@ -16,16 +16,21 @@ jobs:
         node: [20, 22, 24]
     steps:
       - uses: actions/checkout@v4
+
       - uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
           cache: pnpm
+
       - run: pnpm install --frozen-lockfile
+
       - run: pnpm build
-      - if: matrix.node == 22
-        uses: actions/upload-artifact@v4
-        with:
-          name: extension-zip
-          path: apps/extension/extension.zip
-          if-no-files-found: error
+
+      - name: Verify extension zip layout
+        run: |
+          ZIP=$(ls apps/extension/shadcn-design-md-*.zip | head -1)
+          echo "Inspecting $ZIP"
+          unzip -l "$ZIP"
+          unzip -l "$ZIP" | grep -E "^\s+\d+.*manifest\.json$" | grep -v "/manifest.json"
