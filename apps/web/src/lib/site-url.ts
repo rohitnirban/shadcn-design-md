@@ -6,8 +6,6 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
 ).replace(/\/$/, "");
 
-// Where every "Install" / "Add to Chrome" / "Get the extension" CTA points
-// while the Chrome Web Store listing is still in review. Swap to the CWS
-// detail URL once published.
+// Where every "Install" / "Add to Chrome" / "Get the extension" CTA points.
 export const INSTALL_URL =
-  "https://github.com/rohitnirban/shadcn-design-md/releases/latest";
+  "https://chromewebstore.google.com/detail/shadcn-designmd/kjmjiabdahkbogclcjjladohijlmffng";

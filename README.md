@@ -1,6 +1,10 @@
 # shadcn DESIGN.md
 
+[![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-Add%20to%20Chrome-4285F4?logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/shadcn-designmd/kjmjiabdahkbogclcjjladohijlmffng)
+
 Chrome extension that exports any shadcn preset on [`ui.shadcn.com/create`](https://ui.shadcn.com/create) as a portable design spec for AI coding agents.
+
+> **Install:** [Chrome Web Store →](https://chromewebstore.google.com/detail/shadcn-designmd/kjmjiabdahkbogclcjjladohijlmffng) · or grab the unpacked zip from [Releases](https://github.com/rohitnirban/shadcn-design-md/releases/latest).
 
 Three formats from one click:
 
@@ -70,12 +74,18 @@ pnpm build
 - `apps/web` -> `.next/`
 - `apps/extension` -> `apps/extension/dist/` and `apps/extension/extension.zip`
 
-## Load extension unpacked
+## Install the extension
 
-1. `pnpm install && pnpm build`
+### Chrome Web Store (recommended)
+
+[Add to Chrome](https://chromewebstore.google.com/detail/shadcn-designmd/kjmjiabdahkbogclcjjladohijlmffng), then visit https://ui.shadcn.com/create?preset=b5JPhn173.
+
+### Unpacked (for development or if you prefer to side-load)
+
+1. `pnpm install && pnpm build` (or download `shadcn-design-md-<version>.zip` from [Releases](https://github.com/rohitnirban/shadcn-design-md/releases/latest) and unzip)
 2. Open `chrome://extensions`
 3. Toggle Developer mode (top right)
-4. **Load unpacked** -> select `apps/extension/dist/`
+4. **Load unpacked** -> select `apps/extension/dist/` (or the unzipped release folder)
 5. Visit https://ui.shadcn.com/create?preset=b5JPhn173
 
 The DESIGN.md button slots into the sidebar between **Shuffle** and **Create Project**. Click it. Pick a tab. Copy or download.
