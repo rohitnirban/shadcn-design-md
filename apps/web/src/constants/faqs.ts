@@ -27,6 +27,6 @@ export const faqs = [
   {
     question: "How do I install it?",
     answer:
-      "Download the latest shadcn-design-md-<version>.zip from github.com/rohitnirban/shadcn-design-md/releases/latest, unzip it, then load the unzipped folder at chrome://extensions with Developer mode on (Load unpacked). A signed Chrome Web Store release is pending review.",
+      "Install from the Chrome Web Store: chromewebstore.google.com/detail/shadcn-designmd/kjmjiabdahkbogclcjjladohijlmffng. Click Add to Chrome and the DESIGN.md button shows up next to Create Project on ui.shadcn.com/create. Prefer an unpacked build? Grab the zip from github.com/rohitnirban/shadcn-design-md/releases/latest and Load unpacked at chrome://extensions with Developer mode on.",
   },
 ];
