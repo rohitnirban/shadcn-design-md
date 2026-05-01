@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ThemeProvider } from "@/context/theme-provider";
 import { SITE_URL } from "@/lib/site-url";
+
+const GOOGLE_ADS_ID = "AW-18070427821";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -78,6 +81,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="font-primary bg-background text-foreground h-full [--pattern-fg:var(--color-charcoal-900)]/10 dark:[--pattern-fg:var(--color-neutral-100)]/30">
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-ads" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GOOGLE_ADS_ID}');
+          `}
+        </Script>
         <ThemeProvider attribute="class" defaultTheme="system">
           <main className="bg-background h-full antialiased">
             <Navbar />
